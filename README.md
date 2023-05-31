@@ -1,3 +1,15 @@
+# env
+
+create .env.local file in your project root folder
+
+    OPENAI_API_KEY=""
+    OPENAI_END_POINT=""
+    OPENAI_DEPLOYMENT=""
+    OPENAI_GPT35_DEPLOYMENT=""
+    
+    NEXT_PUBLIC_SUPABASE_URL=""
+    SUPABASE_SERVICE_ROLE_KEY=""
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
