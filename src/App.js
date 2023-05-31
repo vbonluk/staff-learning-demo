@@ -77,10 +77,10 @@ class UserInputField extends React.Component {
         const input = this.state.userInput.replace(/\n/g, " ");
         const a = process.env.OPENAI_END_POINT
 
-        const url = process.env.OPENAI_END_POINT + "/openai/deployments/" + process.env.OPENAI_DEPLOYMENT + "/embeddings?api-version=2023-05-15"
+        const url = process.env.REACT_APP_OPENAI_END_POINT + "/openai/deployments/" + process.env.REACT_APP_OPENAI_DEPLOYMENT + "/embeddings?api-version=2023-05-15"
         const headers = {
             "Content-Type": "application/json",
-            "api-key": process.env.OPENAI_API_KEY
+            "api-key": process.env.REACT_APP_OPENAI_API_KEY
         }
         const body = JSON.stringify({
             "input": input
