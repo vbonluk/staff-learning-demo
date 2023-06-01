@@ -1,13 +1,14 @@
-import * as NetworkTools from "./NetworkTools"
+import * as NetworkTools from "../Utils/NetworkTools"
 
-const AzureGPTEndPoint = process.env.REACT_APP_OPENAI_END_POINT + "/openai/deployments/" + process.env.REACT_APP_OPENAI_DEPLOYMENT
+const AzureGPTEndPointEmbeddingModel = process.env.REACT_APP_OPENAI_END_POINT + "/openai/deployments/" + process.env.REACT_APP_OPENAI_DEPLOYMENT
+const AzureGPTEndPointChatGPTModel = process.env.REACT_APP_OPENAI_END_POINT + "/openai/deployments/" + process.env.REACT_APP_OPENAI_GPT35_DEPLOYMENT
 const AzureAPIKey = process.env.REACT_APP_OPENAI_API_KEY
 
 // https://learn.microsoft.com/zh-cn/azure/cognitive-services/openai/reference#embeddings
 export async function gptEmbeddings(input, callback) {
     input = input.replace(/\n/g, " ");
 
-    const url = AzureGPTEndPoint + "/embeddings?api-version=2023-05-15"
+    const url = AzureGPTEndPointEmbeddingModel + "/embeddings?api-version=2023-05-15"
     const headers = {
         "Content-Type": "application/json",
         "api-key": AzureAPIKey
@@ -15,14 +16,14 @@ export async function gptEmbeddings(input, callback) {
     const body = JSON.stringify({
         "input": input
     })
-    await NetworkTools.ApiPost(url, headers, body, callback)
+    return NetworkTools.ApiPost(url, headers, body, callback)
 }
 
 // https://learn.microsoft.com/zh-cn/azure/cognitive-services/openai/reference#chat-completions
 export async function completions(prompt, callback) {
     prompt = prompt.replace(/\n/g, " ");
 
-    const url = AzureGPTEndPoint + "/chat/completions?api-version=2023-05-15"
+    const url = AzureGPTEndPointChatGPTModel + "/chat/completions?api-version=2023-05-15"
     const headers = {
         "Content-Type": "application/json",
         "api-key": AzureAPIKey
@@ -40,8 +41,8 @@ export async function completions(prompt, callback) {
         ],
         max_tokens: 150,
         temperature: 0.0,
-        stream: true
+        stream: false
     })
-    await NetworkTools.ApiPost(url, headers, body, callback)
+    return NetworkTools.ApiPost(url, headers, body, callback)
 }
 

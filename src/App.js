@@ -1,19 +1,53 @@
 import './App.css';
 import React from 'react';
-import * as Api from "./Api"
+import {searchLogic} from "./Logic/Logic";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src="HSBC-logo.jpg" className="App-logo"/>
-      </header>
-        <TimeShower/>
-        <UserInputField/>
-        <AnswerText answer="test"/>
-        <RelatedDocuments relatedDocList={["Doc1","Doc2","Doc3"]}/>
-    </div>
-  );
+// function App2() {
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <img src="HSBC-logo.jpg" className="App-logo"/>
+//       </header>
+//         <TimeShower/>
+//         <UserInputField/>
+//         <AnswerText answer="test"/>
+//         <RelatedDocuments relatedDocList={["Doc1","Doc2","Doc3"]}/>
+//     </div>
+//   );
+// }
+
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {answer: ""}
+        this.answerHandler = this.answerHandler.bind(this)
+    }
+    componentDidMount() {
+
+    }
+    componentWillUnmount() {
+
+    }
+
+    answerHandler(answer) {
+        this.setState({
+            answer: answer
+        });
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <img src="HSBC-logo.jpg" className="App-logo"/>
+                </header>
+                <TimeShower/>
+                <UserInputField answerHandler={this.answerHandler}/>
+                <AnswerText answer={this.state.answer}/>
+                <RelatedDocuments relatedDocList={["Doc1","Doc2","Doc3"]}/>
+            </div>
+        );
+    }
 }
 
 class TimeShower extends React.Component {
@@ -77,15 +111,15 @@ class UserInputField extends React.Component {
         this.setState(function (state) {
             return {buttonText: "loading..."};
         });
-        console.log("embedding...")
-        await Api.gptEmbeddings(this.state.userInput, (status, json) => {
+
+        searchLogic(this.state.userInput, (status, result) => {
             if (status) {
-                console.log("finish embedding")
-                this.setState({buttonText: "finish embedding"})
+                this.props.answerHandler(result)
+                this.setState({buttonText: "Ask Again"})
             } else {
                 this.setState({buttonText: "retry"})
             }
-        })
+        });
     }
 
     render() {
