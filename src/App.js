@@ -1,6 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import React from 'react';
+import * as Api from "./Api"
 
 function App() {
   return (
@@ -40,7 +40,7 @@ class TimeShower extends React.Component {
     render() {
         return (
             <div>
-                <h2>现在是 {this.state.date.toLocaleTimeString()}.</h2>
+                <h2>Timer: {this.state.date.toLocaleTimeString()}.</h2>
             </div>
         );
     }
@@ -50,7 +50,7 @@ class UserInputField extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buttonText: "确定",
+            buttonText: "Ask",
             userInput: ""
         }
         this.clickConfirm = this.clickConfirm.bind(this)
@@ -70,35 +70,22 @@ class UserInputField extends React.Component {
     }
 
     async clickConfirm() {
-        this.setState(function (state) {
-            return {buttonText: "加载中..."};
-        });
-
-        const input = this.state.userInput.replace(/\n/g, " ");
-
-        const url = process.env.REACT_APP_OPENAI_END_POINT + "/openai/deployments/" + process.env.REACT_APP_OPENAI_DEPLOYMENT + "/embeddings?api-version=2023-05-15"
-        const headers = {
-            "Content-Type": "application/json",
-            "api-key": process.env.REACT_APP_OPENAI_API_KEY
+        if (this.state.buttonText === "") {
+            alert("Please input your question")
+            return
         }
-        const body = JSON.stringify({
-            "input": input
+        this.setState(function (state) {
+            return {buttonText: "loading..."};
+        });
+        console.log("embedding...")
+        await Api.gptEmbeddings(this.state.userInput, (status, json) => {
+            if (status) {
+                console.log("finish embedding")
+                this.setState({buttonText: "finish embedding"})
+            } else {
+                this.setState({buttonText: "retry"})
+            }
         })
-        // https://jasonwatmore.com/post/2020/01/27/react-fetch-http-get-request-examples
-        // https://zenn.dev/junki555/articles/4ab67fc78ce64c
-        await fetch(url, {headers: headers, method: "POST", body: body})
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(url + "\n" + response.status);
-                }
-                const json = response.json();
-                const embedding = json.data[0].embedding;
-                console.log(embedding)
-            })
-            .catch(error => {
-                alert(error)
-                this.setState({buttonText: "确定"})
-            });
     }
 
     render() {
@@ -108,7 +95,7 @@ class UserInputField extends React.Component {
                     <h1>Question</h1>
                 </div>
                 <div className="UserInputDiv">
-                    <input className="UserInputField" placeholder="请输入你想问的" onChange={this.inputValueChange} value={this.state.userInput}/>
+                    <input className="UserInputField" placeholder="Please input your question here" onChange={this.inputValueChange} value={this.state.userInput}/>
                     <button className="UserInputButton" onClick={this.clickConfirm}>{this.state.buttonText}</button>
                 </div>
             </div>
@@ -116,23 +103,7 @@ class UserInputField extends React.Component {
     }
 }
 
-function UserInputField2() {
-    return (
-        <div>
-            <div>
-                <h1>Question</h1>
-            </div>
-            <div className="UserInputDiv">
-                <input className="UserInputField" placeholder={"请输入你想问的"}/>
-                <button className="UserInputButton">确定</button>
-            </div>
-        </div>
-        );
-}
-
 function AnswerText(props) {
-    const answer = <p/>;
-
     return (
         <div>
             <div>
