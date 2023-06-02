@@ -112,6 +112,7 @@ class UserInputField extends React.Component {
         }
         this.clickConfirm = this.clickConfirm.bind(this)
         this.inputValueChange = this.inputValueChange.bind(this)
+        this.handleKeyDown = this.handleKeyDown.bind(this)
     }
 
     componentDidMount() {
@@ -136,10 +137,12 @@ class UserInputField extends React.Component {
         }
         this.setState(function (state) {
             return {
-                buttonText: "🚀loading...",
+                buttonText: "🚀Loading...",
                 isLoading: true
             };
         });
+        this.props.answerHandler("")
+        this.props.relatedDocsHandler([])
         await searchLogic(this.state.userInput, (status, answer, relatedDocs) => {
             if (status) {
                 this.props.answerHandler(answer)
@@ -156,15 +159,21 @@ class UserInputField extends React.Component {
         alert("Todo")
     }
 
+    async handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            await this.clickConfirm()
+        }
+    }
+
     render() {
-        let cancelButton = this.state.isLoading ? <button className="UserInputCancelButton" onClick={this.clickCancel}>cancel</button> : null
+        let cancelButton = this.state.isLoading ? <button className="UserInputCancelButton" onClick={this.clickCancel}>Cancel</button> : null
         return (
             <div>
                 <div>
                     <h1>Question</h1>
                 </div>
                 <div className="UserInputDiv">
-                    <input className="UserInputField" placeholder="Please input your question here" onChange={this.inputValueChange} value={this.state.userInput}/>
+                    <input className="UserInputField" placeholder="Please input your question here" onChange={this.inputValueChange} value={this.state.userInput} onKeyPress={this.handleKeyDown} />
                     <button className="UserInputButton" onClick={this.clickConfirm}>{this.state.buttonText}</button>
                     {cancelButton}
                 </div>
@@ -225,7 +234,8 @@ class RelatedDocuments extends React.Component {
         const ulList = this.props.relatedDocList.map((item) => {
             return (
                 <li key={item.id}>
-                    <a href={item.essay_url}>{item.essay_title}</a>
+                    <a href={item.essay_url} target="_blank">{item.essay_title}</a>
+                    <p>{item.content}</p>
                 </li>
             );
         });
