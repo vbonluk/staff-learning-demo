@@ -81,9 +81,9 @@ class UserInputField extends React.Component {
             buttonText: "Ask",
             isLoading: false
         }
-        this.clickConfirm = this.clickConfirm.bind(this)
-        this.inputValueChange = this.inputValueChange.bind(this)
-        this.handleKeyDown = this.handleKeyDown.bind(this)
+        this.clickConfirm = this.clickConfirm.bind(this);
+        this.inputValueChange = this.inputValueChange.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
     componentDidMount() {
@@ -95,7 +95,7 @@ class UserInputField extends React.Component {
     }
 
     inputValueChange(event) {
-        this.setState({ userInput: event.target.value })
+        this.setState({ userInput: event.target.value });
     }
 
     async clickConfirm() {
