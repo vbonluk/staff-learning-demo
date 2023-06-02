@@ -39,6 +39,18 @@
 
 .UserInputButton {
   height: 44px;
+  background-color: #409b5a; /* Green */
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.UserInputCancelButton {
+  height: 44px;
   background-color: #f44336; /* Green */
   border: none;
   color: white;

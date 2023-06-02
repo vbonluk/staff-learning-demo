@@ -21,8 +21,22 @@ import {searchLogic} from "./Logic/Logic";
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {answer: ""}
+        this.state = {
+            answer: "",
+            relatedDocs: [{
+                content: "",
+                content_length: 0,
+                content_tokens: 0,
+                essay_date: "",
+                essay_thanks: "",
+                essay_title: "",
+                essay_url: "",
+                id: 0,
+                similarity: 0
+            }]
+        }
         this.answerHandler = this.answerHandler.bind(this)
+        this.relatedDocsHandler = this.relatedDocsHandler.bind(this)
     }
     componentDidMount() {
 
@@ -37,6 +51,12 @@ class App extends React.Component {
         });
     }
 
+    relatedDocsHandler(relatedDocs) {
+        this.setState({
+            relatedDocs: relatedDocs
+        });
+    }
+
     render() {
         return (
             <div className="App">
@@ -44,9 +64,9 @@ class App extends React.Component {
                     <img src="HSBC-logo.jpg" className="App-logo" alt=""/>
                 </header>
                 <TimeShower/>
-                <UserInputField answerHandler={this.answerHandler}/>
+                <UserInputField answerHandler={this.answerHandler} relatedDocsHandler={this.relatedDocsHandler}/>
                 <AnswerText answer={this.state.answer}/>
-                <RelatedDocuments relatedDocList={["Doc1","Doc2","Doc3"]}/>
+                <RelatedDocuments relatedDocList={this.state.relatedDocs}/>
             </div>
         );
     }
@@ -86,8 +106,9 @@ class UserInputField extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            userInput: "",
             buttonText: "Ask",
-            userInput: ""
+            isLoading: false
         }
         this.clickConfirm = this.clickConfirm.bind(this)
         this.inputValueChange = this.inputValueChange.bind(this)
@@ -110,21 +131,33 @@ class UserInputField extends React.Component {
             alert("Please input your question")
             return
         }
+        if (this.state.isLoading) {
+            return
+        }
         this.setState(function (state) {
-            return {buttonText: "loading..."};
+            return {
+                buttonText: "🚀loading...",
+                isLoading: true
+            };
         });
-
-        searchLogic(this.state.userInput, (status, result) => {
+        await searchLogic(this.state.userInput, (status, answer, relatedDocs) => {
             if (status) {
-                this.props.answerHandler(result)
+                this.props.answerHandler(answer)
+                this.props.relatedDocsHandler(relatedDocs)
                 this.setState({buttonText: "Ask Again"})
             } else {
                 this.setState({buttonText: "retry"})
             }
+            this.setState({isLoading: false})
         });
     }
 
+    clickCancel() {
+        alert("Todo")
+    }
+
     render() {
+        let cancelButton = this.state.isLoading ? <button className="UserInputCancelButton" onClick={this.clickCancel}>cancel</button> : null
         return (
             <div>
                 <div>
@@ -133,6 +166,7 @@ class UserInputField extends React.Component {
                 <div className="UserInputDiv">
                     <input className="UserInputField" placeholder="Please input your question here" onChange={this.inputValueChange} value={this.state.userInput}/>
                     <button className="UserInputButton" onClick={this.clickConfirm}>{this.state.buttonText}</button>
+                    {cancelButton}
                 </div>
             </div>
         );
@@ -188,16 +222,20 @@ class RelatedDocuments extends React.Component {
     }
 
     render() {
-        const relatedDocList = this.props.relatedDocList.map(item =>
-            <li key={item}>{item}</li>
-        );
+        const ulList = this.props.relatedDocList.map((item) => {
+            return (
+                <li key={item.id}>
+                    <a href={item.essay_url}>{item.essay_title}</a>
+                </li>
+            );
+        });
         return (
             <div>
                 <div>
                     <h1>Related Documents</h1>
                 </div>
                 <div>
-                    <ul>{relatedDocList}</ul>
+                    <ul>{ulList}</ul>
                 </div>
             </div>
         );

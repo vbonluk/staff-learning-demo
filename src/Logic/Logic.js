@@ -15,10 +15,18 @@ export async function searchLogic(text, callback) {
     console.log("👾vector db searching success")
     console.log(searchResult)
 
-    return gptAnswerGenerator(text, searchResult, callback)
+    return relatedDocuments(text, searchResult, callback)
 }
 
-async function gptAnswerGenerator(text, searchResult, callback) {
+async function relatedDocuments(text, searchResult, callback) {
+    console.log("🚀listing related documents...")
+    const relatedDocShownList = searchResult.data;
+    console.log("👾finish related documents")
+
+    return gptAnswerGenerator(text, searchResult, relatedDocShownList, callback)
+}
+
+async function gptAnswerGenerator(text, searchResult, relatedDocShownList, callback) {
     console.log("🚀prompts init...")
     let prompt = "Use the following passages to provide an answer to the query: " + text + "\n"
     const allContents = searchResult.data.map((item) => {
@@ -35,5 +43,5 @@ async function gptAnswerGenerator(text, searchResult, callback) {
     console.log("👾asking gpt success")
     console.log(gptAnswer)
 
-    callback(true, gptAnswer)
+    callback(true, gptAnswer, relatedDocShownList)
 }
