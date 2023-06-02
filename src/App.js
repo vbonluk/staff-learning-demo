@@ -2,6 +2,8 @@ import './App.css';
 import React from 'react';
 import {searchLogic} from "./Logic/Logic";
 
+// React Doc: https://zh-hans.react.dev/learn
+
 // function App2() {
 //   return (
 //     <div className="App">
@@ -39,7 +41,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 <header className="App-header">
-                    <img src="HSBC-logo.jpg" className="App-logo"/>
+                    <img src="HSBC-logo.jpg" className="App-logo" alt=""/>
                 </header>
                 <TimeShower/>
                 <UserInputField answerHandler={this.answerHandler}/>
@@ -137,33 +139,69 @@ class UserInputField extends React.Component {
     }
 }
 
-function AnswerText(props) {
-    return (
-        <div>
+class AnswerText extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+
+    }
+
+    componentWillUnmount() {
+
+    }
+
+    inputValueChange(event) {
+
+    }
+
+    render() {
+        return (
             <div>
-                <h1>Answer</h1>
+                <div>
+                    <h1>Answer</h1>
+                </div>
+                <div>
+                    <p>{this.props.answer}</p>
+                </div>
             </div>
-            <div>
-                <p>{props.answer}</p>
-            </div>
-        </div>
-    );
+        );
+    }
 }
 
-function RelatedDocuments(props) {
-    const relatedDocList = props.relatedDocList.map(numbers =>
-        <li>{numbers}</li>
-    );
-    return (
-        <div>
+class RelatedDocuments extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+
+    }
+
+    componentWillUnmount() {
+
+    }
+
+    inputValueChange(event) {
+
+    }
+
+    render() {
+        const relatedDocList = this.props.relatedDocList.map(item =>
+            <li key={item}>{item}</li>
+        );
+        return (
             <div>
-                <h1>Related Documents</h1>
+                <div>
+                    <h1>Related Documents</h1>
+                </div>
+                <div>
+                    <ul>{relatedDocList}</ul>
+                </div>
             </div>
-            <div>
-                <ul>{relatedDocList}</ul>
-            </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default App;
