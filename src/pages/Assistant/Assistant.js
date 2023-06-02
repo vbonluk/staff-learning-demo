@@ -1,7 +1,7 @@
 import './css/Assistant.css';
 import React from 'react';
 import {searchLogic} from "../../Logic/Logic";
-import TimeShower from '../Common/Timer/Timer'
+import TimeShower from '../Common/TimeShower/TimeShower'
 
 // React Doc: https://zh-hans.react.dev/learn
 

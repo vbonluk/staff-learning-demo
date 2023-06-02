@@ -1,6 +1,6 @@
 import './css/Dashboard.css';
 import React from 'react';
-import TimeShower from '../Common/Timer/Timer'
+import TimeShower from '../Common/TimeShower/TimeShower'
 
 class Dashboard extends React.Component {
     constructor(props) {

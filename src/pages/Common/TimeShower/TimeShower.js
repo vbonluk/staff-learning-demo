@@ -24,7 +24,7 @@ class TimeShower extends React.Component {
     render() {
         return (
             <div>
-                <h2>Timer: {this.state.date.toLocaleTimeString()}.</h2>
+                <h2>Time: {this.state.date.toLocaleTimeString()}.</h2>
             </div>
         );
     }
