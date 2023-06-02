@@ -1,8 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import Assistant from './pages/Assistant/Assistant';
+import Layout from './pages/Layout/Layout';
+import Dashboard from './pages/Dashboard/Dashboard';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+export default function App() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Assistant />} />
+                    <Route path="Dashboard" element={<Dashboard />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -1,14 +1,15 @@
-import './App.css';
+import './css/Assistant.css';
 import React from 'react';
-import {searchLogic} from "./Logic/Logic";
+import {searchLogic} from "../../Logic/Logic";
+import TimeShower from '../Common/Timer/Timer'
 
 // React Doc: https://zh-hans.react.dev/learn
 
 // function App2() {
 //   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src="HSBC-logo.jpg" className="App-logo"/>
+//     <div className="Assistant">
+//       <header className="Assistant-header">
+//         <img src="HSBC-logo.jpg" className="Assistant-logo"/>
 //       </header>
 //         <TimeShower/>
 //         <UserInputField/>
@@ -18,7 +19,7 @@ import {searchLogic} from "./Logic/Logic";
 //   );
 // }
 
-class App extends React.Component {
+class Assistant extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -67,36 +68,6 @@ class App extends React.Component {
                 <UserInputField answerHandler={this.answerHandler} relatedDocsHandler={this.relatedDocsHandler}/>
                 <AnswerText answer={this.state.answer}/>
                 <RelatedDocuments relatedDocList={this.state.relatedDocs}/>
-            </div>
-        );
-    }
-}
-
-class TimeShower extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {date: new Date()}
-    }
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(),
-            1000
-        );
-    }
-    componentWillUnmount() {
-        clearInterval(this.timerID)
-    }
-
-    tick() {
-        this.setState({
-            date: new Date()
-        });
-    }
-
-    render() {
-        return (
-            <div>
-                <h2>Timer: {this.state.date.toLocaleTimeString()}.</h2>
             </div>
         );
     }
@@ -252,4 +223,4 @@ class RelatedDocuments extends React.Component {
     }
 }
 
-export default App;
+export default Assistant;
