@@ -64,5 +64,8 @@ This topic describes how to provision and create a cluster with Azure Kubernetes
 ## 二维数据可视化
 [二维数据可视化](https://github.com/openai/openai-cookbook/blob/main/examples/Visualizing_embeddings_in_2D.ipynb)
 
+## Milvus GUI
+[Milvus Gui](https://milvus.io/docs/v2.1.x/attu.md)
+
 # React + TypeScript
 [React + TypeScript](https://juejin.cn/post/6844903920431529997)
