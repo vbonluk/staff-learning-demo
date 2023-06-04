@@ -51,6 +51,8 @@ This topic describes how to provision and create a cluster with Azure Kubernetes
 
 [中文教程](http://www.yishuifengxiao.com/2022/12/27/%E5%90%91%E9%87%8F%E6%90%9C%E7%B4%A2%E6%95%B0%E6%8D%AE%E5%BA%93milvus%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/)
 
+[术语](https://blog.csdn.net/leaning_java/article/details/130344223)
+
 ## 术语
 
     Filed：类似表字段，可以是结构化数据，当然还可以是向量；
