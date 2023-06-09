@@ -71,3 +71,12 @@ This topic describes how to provision and create a cluster with Azure Kubernetes
 
 # React + TypeScript
 [React + TypeScript](https://juejin.cn/post/6844903920431529997)
+
+# 跨域
+
+[跨域](https://sunkanmi.tech/how-to-setup-proxy-in-react-with-http-proxy-middleware)
+
+[跨域](https://sunkanmi.tech/how-to-setup-proxy-in-react-with-http-proxy-middleware)
+
+# 爬网页
+[cheerio](https://mp.weixin.qq.com/s?__biz=MzA5Mjg0NTMxNA==&mid=2247484371&idx=1&sn=34965b10851fb9b8f2fe76399f8edf8b&chksm=9067a7bea7102ea8510d083923b522935e4fa7fd5017dd93b7b8049b68ce85b045c87ae2815c&mpshare=1&scene=1&srcid=0608kYoAkeRz0KW9oEzar3f9&sharer_sharetime=1686235194620&sharer_shareid=5bf83a7187b6102015daeaf8dd517c4d#rd)

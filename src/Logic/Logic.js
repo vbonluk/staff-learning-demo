@@ -1,6 +1,8 @@
 import * as GPTApi from "../Api/GPTApi"
 import * as VectorDatabase from "../Api/VectorDatabaseApi"
 
+const promptInit = "Use the following passages to provide an answer to the query: "
+
 export async function searchLogic(text, callback) {
     console.log("🚀embedding...")
     const embeddingsJson = await GPTApi.gptEmbeddings(text, (status, result) => {
@@ -28,7 +30,7 @@ async function relatedDocuments(text, searchResult, callback) {
 
 async function gptAnswerGenerator(text, searchResult, relatedDocShownList, callback) {
     console.log("🚀prompts init...")
-    let prompt = "Use the following passages to provide an answer to the query: " + text + "\n"
+    let prompt = promptInit + text + "\n"
     const allContents = searchResult.data.map((item) => {
         return item.content
     });
